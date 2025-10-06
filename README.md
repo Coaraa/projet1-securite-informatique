@@ -1,1 +1,3 @@
-# projet1-securite-informatique
+# Projet pratique 1 - Sécurité informatique
+
+## Installation
