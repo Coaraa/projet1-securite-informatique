@@ -185,4 +185,4 @@ pid.file: /run/kibana/kibana.pid
 
 
 # This section was automatically generated during setup.
-elasticsearch.hosts: [https://localhost:9200]
+elasticsearch.hosts: [http://localhost:9200]
