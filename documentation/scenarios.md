@@ -6,7 +6,7 @@ Pour connaitre les possible faille de notre systeme l'attaquant peut vouloir sca
 
 Détection : On peut donc le detecter en identifiant une grande augmentation du nombre de paquet SYN recu sur une courte periode. Dans notre cas on leve une alerte si on recoit plus de 20 paquet dans un laps de temps inferieur a 30 secondes.
 
-## injection SQL
+## Injection SQL
 
 Sur un site où le Front envoie des requettes SQL au Back (souvent a travers des formulaires), l'attaquant peut essayer de modifier la requette SQL de sorte qu'il puisse executer ses propre requette sur notre Base de donnée (pour modifier des donnée, extraire des données sensible ou encore suprimer des tables...). 
 
@@ -18,7 +18,8 @@ Détection : Il est alors commun de retrouver dans ca requette le motif suivant 
 - `SLEEP(` ou `waitfor delay`: permetent de deduire des infos sur les données de la base de données en fonction du temps de reponse.
 - `--` : permet de commenter une partie de la requette SQL initial pour la modifier.
 
-## passage d'un fichier a un autre non autorisé
+## Path traversal
 
-detection de ../../
+Pour acceder a des fichiers normalement innacessible, l'attaquant peut essayer de remonter plus loin que le repertoire racine en manipulant des URL.
 
+Détection : Pour faire cela, la requette de l'attaquant devra contenir `../` ou `%2e%2e%2f`.
