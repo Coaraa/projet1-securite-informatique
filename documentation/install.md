@@ -4,7 +4,7 @@ Ce guide d'installation vous aidera à configurer le système de détection d'an
 
 ## Prérequis
 
-Avant de commencer l'installation, assurez-vous d'avoir un système basé sur Linux. Nous avons utilisé Ubuntu server (version 20.04.3 LTS) pour ce projet, téléchargeable depuis [le site officiel d'Ubuntu](https://ubuntu.com/download/server). Cette machine doit configurer son interface réseau en mode "bridge" pour permettre la communication avec d'autres machines sur le réseau local.
+Avant de commencer l'installation, assurez-vous d'avoir un système basé sur Ubuntu ou Debian . Nous avons utilisé Ubuntu server (version 20.04.3 LTS) pour ce projet, téléchargeable depuis [le site officiel d'Ubuntu](https://ubuntu.com/download/server). Cette machine doit configurer son interface réseau en mode "bridge" pour permettre la communication avec d'autres machines sur le réseau local.
 Il est également nécessaire d'avoir les droits administrateur (sudo) pour installer les paquets requis.
 
 
