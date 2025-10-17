@@ -14,3 +14,15 @@ Nous avons utilisé les outils suivants :
 
 ## Installation
 
+Pour procéder à l'installation, suivez les étapes présentes dans le fichier `install.md`.
+
+## Les différents scénarios 
+
+Nous avons mis en place plusieurs scénarios pour tester notre système de détection d'anomalies. Ils sont décrits dans le fichier `scenarios.md`.
+
+## Auteurs
+
+BLANCHÉ Thomas
+GONINDARD Auriane 
+HONORÉ Alexandre
+SITHIDEJ Clara
