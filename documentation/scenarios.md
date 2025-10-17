@@ -16,13 +16,13 @@ Détection : Cette attaque vas generer un grand nombre de tentative de connexion
 
 L'objectif pour l'attaquant est d'injecter son code dans le site et de le faire executer par des utilisateurs normaux pour recuperer plusieurs informations sur ces derniers ou alors les redirigers vers un autre site (probablement malveillant).
 
-Détection : 
+Détection : On detecte le motif `script` utiliser dans la balise `<script>`.
 
 ## Injection SQL
 
 Sur un site où le Front envoie des requettes SQL au Back (souvent a travers des formulaires), l'attaquant peut essayer de modifier la requette SQL de sorte qu'il puisse executer ses propre requette sur notre Base de donnée (pour modifier des donnée, extraire des données sensible ou encore suprimer des tables...). 
 
-Détection : Il est alors commun de retrouver dans ca requette le motif suivant : `' OR '1'='1`. Nous detectons aussi les motifs :
+Détection : Il est alors commun de retrouver dans ca requette le motif suivant : `'OR '1'='1`. Nous detectons aussi les motifs :
 
 - `DROP TABLE` : pour supprimer des données.
 - `UNION SELECT` : pour recuperer plus de données que prevu initialement.
