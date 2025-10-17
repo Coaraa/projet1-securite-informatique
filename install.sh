@@ -40,6 +40,7 @@ sudo cp ./config/kibana.yml /etc/kibana/kibana.yml
 sudo cp ./config/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 sudo cp ./config/snort-to-elastic.conf /etc/syslog-ng/conf.d/
 sudo cp ./config/syslog-ng.conf /etc/syslog-ng/
+sudo cp ./config/snort.conf /etc/snort/
 sudo cp ./config/local.rules /etc/snort/rules/
 
 echo "=== Configuration du nom du nœud maître Elasticsearch ==="
