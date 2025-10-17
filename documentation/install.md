@@ -33,11 +33,11 @@ Il est également nécessaire d'avoir les droits administrateur (sudo) pour inst
 
 - Dans la barre latérale gauche, cliquez sur "Stack Management".
 
-![Interface de gestion de la pile Kibana](management_kibana.png)
+![Interface de gestion de la pile Kibana](img/management_kibana.png)
 
 - Allez dans la section "Management" puis "Kibana" et sélectionnez "Data Views".
 
-![Interface de gestion des data views Kibana](management_dataviews.png)
+![Interface de gestion des data views Kibana](img/management_dataviews.png)
 
 - Cliquez sur "Create data view".
 
@@ -45,7 +45,7 @@ Il est également nécessaire d'avoir les droits administrateur (sudo) pour inst
     - Pour "Data view name", mettez `snort-logs`
     - Pour "Index pattern", mettez `snort-logs*`
 
-    ![Interface de création du data view Kibana](dataview_kibana.png)
+    ![Interface de création du data view Kibana](img/dataview_kibana.png)
 
 - Cliquez sur "Create data view" pour finaliser la création.
 
