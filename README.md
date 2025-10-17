@@ -22,7 +22,7 @@ Nous avons mis en place plusieurs scénarios pour tester notre système de déte
 
 ## Auteurs
 
-BLANCHÉ Thomas
-GONINDARD Auriane 
-HONORÉ Alexandre
-SITHIDEJ Clara
+BLANCHÉ Thomas  
+GONINDARD Auriane   
+HONORÉ Alexandre  
+SITHIDEJ Clara  
