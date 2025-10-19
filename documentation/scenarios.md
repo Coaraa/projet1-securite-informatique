@@ -18,6 +18,9 @@ Depuis une autre machine, on peut envoyer un ping vers la machine sur laquelle s
 ping <adresse_ip_de_la_machine_snort>
 ```
 
+**Log dans kibana :**
+![ping_kibana](img\kibanaPing.png)
+
 ## Scan de port
 
 Pour connaitre les possibles failles de notre système l'attaquant peut vouloir scanner tous les ports de notre machine. Pour cela l'attaquant envoie un paquet SYN a chaque port de notre machine après quoi il coupe rapidement la connexion.
@@ -38,6 +41,9 @@ Depuis une autre machine, on peut utiliser l'outil nmap pour scanner les ports d
 nmap -sS -p- <adresse_ip_de_la_machine_snort>
 ```
 
+**Log dans kibana :**
+![scan_kibana](img\kibanaScanPort.png)
+
 ## SSH brute-force
 
 L'attaquant essaye de deviner le mot de passe d'un utilisateur en envoyant un grand nombre de combinaisons nom d'utilisateur/mot de passe en espérant bien tomber.
@@ -57,6 +63,8 @@ Depuis une autre machine, on peut utiliser l'outil hydra pour lancer une attaque
 ```bash 
 hydra -t 64 -f -V -L users.txt -P passwords.txt ssh://<adresse_ip_de_la_machine_snort> -s 22
 ```
+**Log dans kibana :**
+![ssh_bruteforce_kibana](img\kibanaBruteForce.png)
 
 ## Injection XSS
 
@@ -83,6 +91,8 @@ Depuis une autre machine, on peut utiliser l'outil curl pour envoyer une requêt
 ```bash
 curl -X POST 'http://<adresse_ip_de_la_machine_snort>:8000/submit' -H 'User-Agent: SIEM-TEST-Agent/1.0' --data-urlencode 'username=testuser' --data-urlencode 'comment=<script>XSS_TEST_2025</script>'
 ```
+**Log dans kibana :**
+![xss_kibana](img\kibanaxss.png)
 
 ## Path traversal
 
@@ -104,6 +114,8 @@ Toujours avec le même serveur web simple sur le port 8000, on peut utiliser l'o
 ```bash
 curl "http://<adresse_ip_de_la_machine_snort>:8000?file=../../../../etc/passwd"
 ```
+**Log dans kibana :**
+![path_traversal_kibana](img\kibanapath.png)
 
 ## Injection SQL
 
@@ -144,3 +156,5 @@ ND%20'1'='1"
 # Time-based blind SQLi pour MSSQL
 curl "http://<adresse_ip_de_la_machine_snort>:8000?user=admin'%20;WAITFOR%20DELAY%20'0:0:5'%20--"
 ```
+**Log dans kibana :**
+![sql_injection_kibana](img\kibanaSQLinj.png)
