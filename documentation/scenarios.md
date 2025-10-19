@@ -23,7 +23,7 @@ ping <adresse_ip_de_la_machine_snort>
 
 ## Scan de port
 
-Pour connaitre les possibles failles de notre système l'attaquant peut vouloir scanner tous les ports de notre machine. Pour cela l'attaquant envoie un paquet SYN a chaque port de notre machine après quoi il coupe rapidement la connexion.
+Pour connaitre les possibles failles de notre système, l'attaquant peut vouloir scanner tous les ports de notre machine. Pour cela, l'attaquant envoie un paquet SYN à chaque port de notre machine, après quoi il coupe rapidement la connexion.
 
 Détection : On peut donc le détecter en identifiant une grande augmentation du nombre de paquets SYN reçu sur une courte période. Dans notre cas on lève une alerte si on reçoit plus de 20 paquets dans un laps de temps inférieur a 60 secondes.
 
@@ -48,7 +48,7 @@ nmap -sS -p- <adresse_ip_de_la_machine_snort>
 
 L'attaquant essaye de deviner le mot de passe d'un utilisateur en envoyant un grand nombre de combinaisons nom d'utilisateur/mot de passe en espérant bien tomber.
 
-Détection : Cette attaque va générer un grand nombre de tentatives de connexion SSH sur le port 22. Si plus de 10 tentatives sont realisées en moins de 60 secondes, une alerte sera levée.
+Détection : Cette attaque va générer un grand nombre de tentatives de connexion SSH sur le port 22. Si plus de 10 tentatives sont réalisées en moins de 60 secondes, une alerte sera levée.
 
 rules :
 
@@ -58,7 +58,7 @@ alert tcp any any -> $HOME_NET 22 (msg:"[CUSTOM] Possible SSH brute-force - many
 
 Méthode de test :
 
-Depuis une autre machine, on peut utiliser l'outil hydra pour lancer une attaque brute-force sur le service SSH de la machine sur laquelle snort est installé. Les fichiers `users.txt` et `passwords.txt` contiennent respectivement une liste de noms d'utilisateurs et de mots de passe a tester.
+Depuis une autre machine, on peut utiliser l'outil hydra pour lancer une attaque brute-force sur le service SSH de la machine sur laquelle snort est installé. Les fichiers `users.txt` et `passwords.txt` contiennent respectivement une liste de noms d'utilisateurs et de mots de passe à tester.
 
 ```bash 
 hydra -t 64 -f -V -L users.txt -P passwords.txt ssh://<adresse_ip_de_la_machine_snort> -s 22
@@ -96,7 +96,7 @@ curl -X POST 'http://<adresse_ip_de_la_machine_snort>:8000/submit' -H 'User-Agen
 
 ## Path traversal
 
-Pour accéder a des fichiers normalement innacessibles, l'attaquant peut essayer de remonter plus loin que le répertoire racine en manipulant des URL.
+Pour accéder à des fichiers normalement inaccessibles, l'attaquant peut essayer de remonter plus loin que le répertoire racine en manipulant des URL.
 
 Détection : Pour faire cela, la requête de l'attaquant devra contenir `../` ou `%2e%2e%2f`.
 
@@ -119,7 +119,7 @@ curl "http://<adresse_ip_de_la_machine_snort>:8000?file=../../../../etc/passwd"
 
 ## Injection SQL
 
-Sur un site où le Front envoie des requêtes SQL au Back (souvent a travers des formulaires), l'attaquant peut essayer de modifier la requête SQL de sorte qu'il puisse exécuter ses propres requête sur notre Base de données (pour modifier des données, extraire des données sensible ou encore supprimer des tables...).
+Sur un site où le Front envoie des requêtes SQL au Back (souvent à travers des formulaires), l'attaquant peut essayer de modifier la requête SQL de sorte qu'il puisse exécuter ses propres requêtes sur notre base de données (pour modifier des données, extraire des données sensibles ou encore supprimer des tables...).
 
 Détection : Il est alors commun de retrouver dans sa requête le motif suivant : `'OR '1'='1`. Nous détectons aussi les motifs :
 
