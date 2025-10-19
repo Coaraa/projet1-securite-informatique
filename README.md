@@ -20,6 +20,9 @@ Pour procéder à l'installation, suivez les étapes présentes dans le fichier 
 
 Nous avons mis en place plusieurs scénarios pour tester notre système de détection d'anomalies. Ils sont décrits dans le fichier `scenarios.md`.
 
+## Dashboards
+Le guide de création d'un dashboard se trouve dans le fichier `dashboards.md`.
+
 ## Auteurs
 
 BLANCHÉ Thomas  
