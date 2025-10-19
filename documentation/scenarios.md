@@ -10,6 +10,14 @@ rules :
 alert icmp any any -> any any (msg:"ICMP Ping detected"; sid:1000001; rev:1;)
 ```
 
+Méthode de test :
+
+Depuis une autre machine, on peut envoyer un ping vers la machine sur laquelle snort est installé.
+
+```bash
+ping <adresse_ip_de_la_machine_snort>
+```
+
 ## Scan de port
 
 Pour connaitre les possibles failles de notre système l'attaquant peut vouloir scanner tous les ports de notre machine. Pour cela l'attaquant envoie un paquet SYN a chaque port de notre machine après quoi il coupe rapidement la connexion.
@@ -20,6 +28,14 @@ rules :
 
 ```bash
 alert tcp any any -> $HOME_NET any (msg:"[CUSTOM] Possible SYN scan - many SYNs from single host"; flags:S; threshold: type both, track by_src, count 20, seconds 60; sid:1000010; rev:1;)
+```
+
+Méthode de test :
+
+Depuis une autre machine, on peut utiliser l'outil nmap pour scanner les ports de la machine sur laquelle snort est installé.
+
+```bash
+nmap -sS -p- <adresse_ip_de_la_machine_snort>
 ```
 
 ## SSH brute-force
@@ -34,6 +50,14 @@ rules :
 alert tcp any any -> $HOME_NET 22 (msg:"[CUSTOM] Possible SSH brute-force - many connections to port 22"; flow:to_server; threshold: type both, track by_src, count 10, seconds 60; sid:1000020; rev:1;)
 ```
 
+Méthode de test :
+
+Depuis une autre machine, on peut utiliser l'outil hydra pour lancer une attaque brute-force sur le service SSH de la machine sur laquelle snort est installé. Les fichiers `users.txt` et `passwords.txt` contiennent respectivement une liste de noms d'utilisateurs et de mots de passe a tester.
+
+```bash 
+hydra -t 64 -f -V -L users.txt -P passwords.txt ssh://<adresse_ip_de_la_machine_snort> -s 22
+```
+
 ## Injection XSS
 
 L'objectif pour l'attaquant est d'injecter son code dans le site et de le faire exécuter par des utilisateurs normaux pour récupérer plusieurs informations sur ces derniers ou alors les rediriger vers un autre site (probablement malveillant).
@@ -44,6 +68,20 @@ rules :
 
 ```bash
 alert tcp any any -> any 8000 (msg:"XSS <script dans payload brut TCP"; flow:to_server,established; content:"script"; sid:1000030; rev:1;)
+```
+
+Méthode de test :
+
+La commande suivante permet de lancer un serveur web simple sur le port 8000 qui accepte des requêtes POST. Le code du serveur est disponible dans le dossier `python_server`.
+
+```bash
+python3 -m simple_server.py 8000
+```
+
+Depuis une autre machine, on peut utiliser l'outil curl pour envoyer une requête HTTP contenant une tentative d'injection XSS vers la machine sur laquelle snort est installé.
+
+```bash
+curl -X POST 'http://<adresse_ip_de_la_machine_snort>:8000/submit' -H 'User-Agent: SIEM-TEST-Agent/1.0' --data-urlencode 'username=testuser' --data-urlencode 'comment=<script>XSS_TEST_2025</script>'
 ```
 
 ## Path traversal
@@ -57,6 +95,14 @@ rules :
 ```bash
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"../"; http_uri; nocase; sid:1000040; rev:1;)
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"%2e%2e%2f"; http_uri; nocase; sid:1000041; rev:1;)
+```
+
+Méthode de test :
+
+Toujours avec le même serveur web simple sur le port 8000, on peut utiliser l'outil curl pour envoyer une requête HTTP contenant une tentative de path traversal vers la machine sur laquelle snort est installé.
+
+```bash
+curl "http://<adresse_ip_de_la_machine_snort>:8000?file=../../../../etc/passwd"
 ```
 
 ## Injection SQL
@@ -78,4 +124,23 @@ alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - UNION SELECT 
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (SLEEP)"; flow:to_server; content:"sleep("; http_uri; nocase; sid:1000051; rev:1;)
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (WAITFOR)"; flow:to_server; content:"waitfor delay"; http_uri; nocase; sid:1000052; rev:1;)
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Simple SQL Injection Attempt - 'OR 1=1'"; flow:to_server; content:"OR 1=1"; http_uri; sid:1000053; rev:1;)
+```
+
+Méthode de test :
+
+Toujours avec le même serveur web simple sur le port 8000, on peut utiliser l'outil curl pour envoyer une requête HTTP contenant une tentative d'injection SQL vers la machine sur laquelle snort est installé.
+
+```bash
+# Union select
+curl "http://<adresse_ip_de_la_machine_snort>:8000?id=-1+UNION+SELECT+username,password+FROM+users"
+
+# Simple 'OR 1=1'
+curl "http://<adresse_ip_de_la_machine_snort>:8000?id=%27%20OR%201=1"
+
+# Time-based blind SQLi pour MySQL
+curl "http://<adresse_ip_de_la_machine_snort>:8000?user=admin'%20AND%20(SELECT%201%20FROM%20(SELECT(SLEEP(5)))a)%20A
+ND%20'1'='1"
+
+# Time-based blind SQLi pour MSSQL
+curl "http://<adresse_ip_de_la_machine_snort>:8000?user=admin'%20;WAITFOR%20DELAY%20'0:0:5'%20--"
 ```
