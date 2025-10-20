@@ -52,7 +52,7 @@ nmap -sS -p- <adresse_ip_de_la_machine_snort>
 
 L'attaquant essaye de deviner le mot de passe d'un utilisateur en envoyant un grand nombre de combinaisons nom d'utilisateur/mot de passe en espérant bien tomber.
 
-Détection : Cette attaque va générer un grand nombre de tentatives de connexion SSH sur le port 22. Si plus de 10 tentatives sont réalisées en moins de 60 secondes, une alerte sera levée.
+Détection : Cette attaque va générer un grand nombre de tentatives de connexion SSH sur le port 22. Si plus de 20 tentatives sont réalisées en moins de 30 secondes, une alerte sera levée.
 
 rules :
 
