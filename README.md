@@ -12,6 +12,10 @@ Nous avons utilisé les outils suivants :
 - *Kibana* pour la visualisation des données et la création de tableaux de bord interactifs
 - *syslog-ng* pour la collecte et le transfert des logs
 
+Nous pouvons résumer l'architecture de notre système avec le schéma suivant :
+
+![Architecture du système](/documentation/img/schemaArchitecture.png)
+
 ## Installation
 
 Pour procéder à l'installation, suivez les étapes présentes dans le fichier `install.md`.
