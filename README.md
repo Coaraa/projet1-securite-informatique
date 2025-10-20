@@ -23,6 +23,10 @@ Nous avons mis en place plusieurs scénarios pour tester notre système de déte
 ## Dashboards
 Le guide de création d'un dashboard se trouve dans le fichier `dashboard.md`.
 
+## Analyse et conclusion
+
+L'analyse détaillée et la conclusion de notre projet sont disponibles dans le fichier `conclusion.md`.
+
 ## Auteurs
 
 BLANCHÉ Thomas  
