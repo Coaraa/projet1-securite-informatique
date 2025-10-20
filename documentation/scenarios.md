@@ -10,6 +10,8 @@ rules :
 alert icmp any any -> any any (msg:"ICMP Ping detected"; sid:1000001; rev:1; priority:3;)
 ```
 
+Priorité : 3 (faible) car ce n'est pas une attaque en soi, mais cela peut être utile pour un attaquant de savoir si une machine est en ligne ou non.
+
 Méthode de test :
 
 Depuis une autre machine, on peut envoyer un ping vers la machine sur laquelle snort est installé.
@@ -32,6 +34,8 @@ rules :
 ```bash
 alert tcp any any -> $HOME_NET any (msg:"[CUSTOM] Possible SYN scan - many SYNs from single host"; flags:S; threshold: type both, track by_src, count 20, seconds 60; sid:1000010; rev:1; priority:2;)
 ```
+
+Priorité : 2 (moyenne) car un scan de port est souvent synonyme de préparation d'une attaque plus importante.
 
 Méthode de test :
 
@@ -56,6 +60,8 @@ rules :
 alert tcp any any -> $HOME_NET 22 (msg:"[CUSTOM] Possible SSH brute-force - many connections to port 22"; flow:to_server; threshold: type both, track by_src, count 20, seconds 30; sid:1000020; rev:1; priority:1;)
 ```
 
+Priorité : 1 (élevée) car une attaque brute-force réussie peut permettre à un attaquant d'accéder à notre système.
+
 Méthode de test :
 
 Depuis une autre machine, on peut utiliser l'outil hydra pour lancer une attaque brute-force sur le service SSH de la machine sur laquelle snort est installé. Les fichiers `users.txt` et `passwords.txt` contiennent respectivement une liste de noms d'utilisateurs et de mots de passe à tester.
@@ -77,6 +83,8 @@ rules :
 ```bash
 alert tcp any any -> any 8000 (msg:"[CUSTOM] XSS <script dans payload brut TCP"; flow:to_server,established; content:"script"; sid:1000030; rev:1; priority:2;)
 ```
+
+Priorité : 2 (moyenne) car une attaque XSS peut permettre de récupérer des informations sensibles sur les utilisateurs du site.
 
 Méthode de test :
 
@@ -106,6 +114,8 @@ rules :
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"../"; http_uri; nocase; sid:1000040; rev:1; priority:2;)
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"%2e%2e%2f"; http_uri; nocase; sid:1000041; rev:1; priority:2;)
 ```
+
+Priorité : 2 (moyenne) car une attaque de path traversal réussie peut permettre à un attaquant d'accéder à des fichiers sensibles sur le serveur.
 
 Méthode de test :
 
@@ -137,6 +147,8 @@ alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Bl
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (WAITFOR)"; flow:to_server; content:"waitfor delay"; http_uri; nocase; sid:1000052; rev:1; priority:1;)
 alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Simple SQL Injection Attempt - 'OR 1=1'"; flow:to_server; content:"OR 1=1"; http_uri; sid:1000053; rev:1; priority:1;)
 ```
+
+Priorité : 1 (élevée) car une injection SQL réussie peut compromettre gravement la sécurité de la base de données.
 
 Méthode de test :
 
