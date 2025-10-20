@@ -9,7 +9,7 @@ Bien que notre système offre une meilleure visibilité et une détection plus r
 | Limite | Description |
 |--------|-------------|   
 | Faible sécurité | Lors de la mise en place de l'architecture, nous avons désactivé certaines mesures de sécurité pour faciliter les tests et le développement. Cela peut exposer le système à des vulnérabilités. |
-| Abscence d'alertes en temps réel | Le système actuel ne génère pas d'alertes en temps réel, ce qui peut retarder la réponse aux incidents de sécurité. En effet, il est nécessaire de consulter les rapports manuellement pour identifier les menaces. |
+| Abscence de notification en temps réel | Le système actuel ne génère pas de notification en temps réel, ce qui peut retarder la réponse aux incidents de sécurité. En effet, il est nécessaire de consulter les rapports manuellement pour identifier les menaces. |
 | Couverture des menaces | Le système peut ne pas détecter toutes les formes d'attaques mais seulement celles pour lesquelles des règles spécifiques ont été définies. |
 | Faux positifs | La détection basée sur des règles peut générer des faux positifs, ce qui peut entraîner une surcharge de travail pour les équipes de sécurité. |
 
