@@ -7,7 +7,7 @@ Pour pouvoir tester facilement le fonctionnement de notre système (snort elasti
 rules :
 
 ```bash
-alert icmp any any -> any any (msg:"ICMP Ping detected"; sid:1000001; rev:1;)
+alert icmp any any -> any any (msg:"ICMP Ping detected"; sid:1000001; rev:1; priority:3;)
 ```
 
 Méthode de test :
@@ -30,7 +30,7 @@ Détection : On peut donc le détecter en identifiant une grande augmentation du
 rules :
 
 ```bash
-alert tcp any any -> $HOME_NET any (msg:"[CUSTOM] Possible SYN scan - many SYNs from single host"; flags:S; threshold: type both, track by_src, count 20, seconds 60; sid:1000010; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"[CUSTOM] Possible SYN scan - many SYNs from single host"; flags:S; threshold: type both, track by_src, count 20, seconds 60; sid:1000010; rev:1; priority:2;)
 ```
 
 Méthode de test :
@@ -53,7 +53,7 @@ Détection : Cette attaque va générer un grand nombre de tentatives de connexi
 rules :
 
 ```bash
-alert tcp any any -> $HOME_NET 22 (msg:"[CUSTOM] Possible SSH brute-force - many connections to port 22"; flow:to_server; threshold: type both, track by_src, count 10, seconds 60; sid:1000020; rev:1;)
+alert tcp any any -> $HOME_NET 22 (msg:"[CUSTOM] Possible SSH brute-force - many connections to port 22"; flow:to_server; threshold: type both, track by_src, count 20, seconds 30; sid:1000020; rev:1; priority:1;)
 ```
 
 Méthode de test :
@@ -75,7 +75,7 @@ Détection : On détecte le motif `script` utilisé dans la balise `<script>`.
 rules :
 
 ```bash
-alert tcp any any -> any 8000 (msg:"XSS <script dans payload brut TCP"; flow:to_server,established; content:"script"; sid:1000030; rev:1;)
+alert tcp any any -> any 8000 (msg:"[CUSTOM] XSS <script dans payload brut TCP"; flow:to_server,established; content:"script"; sid:1000030; rev:1; priority:2;)
 ```
 
 Méthode de test :
@@ -103,8 +103,8 @@ Détection : Pour faire cela, la requête de l'attaquant devra contenir `../` ou
 rules :
 
 ```bash
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"../"; http_uri; nocase; sid:1000040; rev:1;)
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"%2e%2e%2f"; http_uri; nocase; sid:1000041; rev:1;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"../"; http_uri; nocase; sid:1000040; rev:1; priority:2;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Path Traversal Attempt - double dot slash sequence"; flow:to_server; content:"%2e%2e%2f"; http_uri; nocase; sid:1000041; rev:1; priority:2;)
 ```
 
 Méthode de test :
@@ -132,10 +132,10 @@ Détection : Il est alors commun de retrouver dans sa requête le motif suivant 
 rules :
 
 ```bash
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - UNION SELECT detected"; flow:to_server; content:"union select"; http_uri; nocase; sid:1000050; rev:1;)
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (SLEEP)"; flow:to_server; content:"sleep("; http_uri; nocase; sid:1000051; rev:1;)
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (WAITFOR)"; flow:to_server; content:"waitfor delay"; http_uri; nocase; sid:1000052; rev:1;)
-alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Simple SQL Injection Attempt - 'OR 1=1'"; flow:to_server; content:"OR 1=1"; http_uri; sid:1000053; rev:1;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - UNION SELECT detected"; flow:to_server; content:"union select"; http_uri; nocase; sid:1000050; rev:1; priority:1;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (SLEEP)"; flow:to_server; content:"sleep("; http_uri; nocase; sid:1000051; rev:1; priority:1;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] SQL Injection - Time-Based Blind SQLi (WAITFOR)"; flow:to_server; content:"waitfor delay"; http_uri; nocase; sid:1000052; rev:1; priority:1;)
+alert tcp any any -> $HOME_NET 8000 (msg:"[CUSTOM] Simple SQL Injection Attempt - 'OR 1=1'"; flow:to_server; content:"OR 1=1"; http_uri; sid:1000053; rev:1; priority:1;)
 ```
 
 Méthode de test :
